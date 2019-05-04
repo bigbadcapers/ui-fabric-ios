@@ -5,6 +5,12 @@
 
 public class OfficeUIFabricFramework: NSObject {
     public static var bundle: Bundle { return Bundle(for: self) }
+    public static var resourceBundle: Bundle {
+        guard let url = bundle.resourceURL?.appendingPathComponent("OfficeUIFabricResources.bundle", isDirectory: true), let bundle = Bundle(url: url) else {
+            fatalError("OfficeUIFabric: resource bundle is not found")
+        }
+        return bundle
+  }
 
     public static func initializeAppearance() {
         // UINavigationBar
@@ -32,5 +38,9 @@ public class OfficeUIFabricFramework: NSObject {
         titleAttributes = barButtonItem.titleTextAttributes(for: .normal) ?? [:]
         titleAttributes[.font] = MSFonts.body
         barButtonItem.setTitleTextAttributes(titleAttributes, for: .normal)
+
+        // UISwitch
+        let `switch` = UISwitch.appearance()
+        `switch`.onTintColor = MSColors.primary
     }
 }
